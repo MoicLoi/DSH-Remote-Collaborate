@@ -1,0 +1,55 @@
+{
+  "name": "dsh-collab",
+  "version": "0.7.0",
+  "description": "Extremely lightweight link-based collaboration for DeepSeek Harness: a share link streams a structured session view (no video), and peers can browse the host workspace read-only. LAN first, hub-ready.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./protocol": "./src/protocol.js",
+    "./client": "./client/client.js"
+  },
+  "bin": {
+    "dsh-collab": "bin/collab.mjs",
+    "dsh-collab-hub": "bin/hub.mjs"
+  },
+  "files": [
+    "src",
+    "web",
+    "client",
+    "bin",
+    "cordis.patch.yml",
+    "README.md",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "smoke": "node scripts/smoke-plugin.mjs",
+    "demo": "node scripts/demo.mjs",
+    "build:client": "node client/build.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/schemastery": "*"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "collaboration",
+    "share-link",
+    "tui"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>dsh-collab console</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="console-page">
+<header>
+  <span class="brand"><span class="dot online" id="dot"></span><span data-i18n="admin.title">dsh-collab 主机控制台</span></span>
+  <span class="spacer"></span>
+  <button id="lang" type="button" data-i18n="admin.langButton">EN</button>
+  <button id="refresh" class="primary" type="button" data-i18n="admin.refresh">刷新</button>
+</header>
+
+<main class="console">
+  <p class="muted console-sub" data-i18n="admin.subtitle"></p>
+  <div class="badges" id="badges"></div>
+
+  <table class="rooms" id="rooms">
+    <thead>
+      <tr>
+        <th data-i18n="admin.code">房间码</th>
+        <th data-i18n="admin.session">会话</th>
+        <th data-i18n="admin.peers">在线</th>
+        <th data-i18n="admin.expires">到期</th>
+        <th data-i18n="admin.audit">审计</th>
+        <th data-i18n="admin.actions">操作</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="muted" id="empty" hidden data-i18n="admin.noRooms"></p>
+  <p class="console-toast" id="toast" role="status" aria-live="polite"></p>
+</main>
+
+<script type="module" src="/assets/admin.js"></script>
+</body>
+</html>

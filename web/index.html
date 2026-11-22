@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title data-i18n="app.title">dsh-collab · 协作观看</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header>
+  <span class="brand"><span class="dot" id="dot"></span>dsh-collab</span>
+  <span class="meta">
+    <span><span data-i18n="app.room">房间</span> <b id="room">—</b></span>
+    <span><span data-i18n="app.host">主机</span> <b id="host">—</b></span>
+    <span><span data-i18n="app.peers">在线</span> <b id="peers">0</b></span>
+    <span id="ttl">—</span>
+  </span>
+  <span class="spacer"></span>
+  <button id="lang" type="button" data-i18n="app.langButton">EN</button>
+  <button id="toggle-files" type="button" data-i18n="app.files">文件</button>
+  <button id="jump-latest" type="button" data-i18n="app.latest">最新</button>
+</header>
+
+<div class="presence" id="presence" aria-live="polite" hidden></div>
+
+<main>
+  <section id="timeline" aria-live="polite" aria-label="conversation timeline"></section>
+  <section id="comments" hidden aria-label="collaborator comments">
+    <div class="comments-head"><span data-i18n="app.comments">协作者留言</span> <b id="comments-count">0</b></div>
+    <div id="comments-list"></div>
+  </section>
+  <aside id="drawer" hidden aria-label="workspace files">
+    <div class="drawer-head">
+      <input id="search" type="search" data-i18n-placeholder="app.searchPlaceholder" aria-label="search workspace">
+      <button id="close-files" type="button" data-i18n="app.close">关闭</button>
+    </div>
+    <div class="tree" id="tree"></div>
+    <div class="preview" id="preview" hidden>
+      <div class="preview-head">
+        <span class="path" id="preview-path">—</span>
+        <span id="preview-meta"></span>
+        <span class="spacer"></span>
+        <button id="close-preview" type="button" data-i18n="app.collapse">收起</button>
+      </div>
+      <pre id="preview-body"></pre>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <div class="composer" id="composer" hidden>
+    <span class="anchor-chip" id="anchor-chip" hidden></span>
+    <textarea id="comment-input" rows="1" data-i18n-placeholder="app.commentPlaceholder" aria-label="message"></textarea>
+    <button id="comment-send" class="primary" type="button" data-i18n="app.send">发送</button>
+  </div>
+  <span id="status">…</span>
+  <span class="spacer"></span>
+  <span data-i18n="app.footer">只读 · 结构化视图（无视频流）</span>
+</footer>
+
+<div id="gate" role="alertdialog" aria-modal="true">
+  <div class="card">
+    <h1 id="gate-title" data-i18n="app.gate.interrupted">连接中断</h1>
+    <p id="gate-body"></p>
+    <button id="gate-retry" class="primary" type="button" data-i18n="app.retry">重试</button>
+  </div>
+</div>
+
+<script type="module" src="/assets/app.js"></script>
+</body>
+</html>

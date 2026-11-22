@@ -1,0 +1,6 @@
+node_modules/
+shots/
+.demo-workspace/
+*.log
+.DS_Store
+dist/

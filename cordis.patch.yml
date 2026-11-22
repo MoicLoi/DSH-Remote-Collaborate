@@ -1,0 +1,16 @@
+# dsh-collab bundle patch.
+# Single package, single plugin: mounting this row is the whole install.
+# Tune every knob from the profile's cordis.patch.yml by overriding this row by id.
+- insert:
+    - id: dsh-collab
+      name: dsh-collab
+      config:
+        role: host
+        bind: 127.0.0.1
+        port: 8848
+        allowPeers: 8
+        ttlMinutes: 30
+        maxFileBytes: 262144
+        # token 级流式（assistant-stream）与每房间访问审计
+        streaming: true
+        audit: true
