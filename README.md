@@ -265,9 +265,21 @@ test/             node:test 单测 + 端到端
 ## 测试
 
 ```bash
-node --test "test/*.test.js"     # 78 个：crypto / invite / projector / stream / presence / gateway / ws / hub / admin / e2e / e2e-hub
+node --test "test/*.test.js"     # 91 个：crypto / invite / projector / stream / presence / gateway / ws / hub / admin / comments / panel / e2e / e2e-hub
 node scripts/smoke-plugin.mjs    # 插件级：配置、命令、工具、真实 WS 全链路
 ```
+
+## 打包与发布
+
+```bash
+npm pack --pack-destination dist                    # npm 包（files 白名单，37 个文件）
+git archive --format=zip -o dist/dsh-collab-0.7.0-source.zip HEAD
+git archive --format=tar.gz --prefix=dsh-collab-0.7.0/ -o dist/dsh-collab-0.7.0-source.tar.gz HEAD
+```
+
+校验（PowerShell）：`Get-ChildItem dist/*.tgz,dist/*.zip,dist/*.tar.gz | ForEach-Object { "$((Get-FileHash $_ -Algorithm SHA256).Hash.ToLower())  $($_.Name)" }`
+
+发布：`git tag v0.7.0 && git push origin main --tags`。推送 tag 后 `.github/workflows/release.yml` 会自动跑测试、重打包三个产物、算 SHA256 并建 GitHub Release。
 
 ## 当前状态（M4）
 

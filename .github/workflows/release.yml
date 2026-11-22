@@ -1,0 +1,46 @@
+name: release
+
+# Tag a commit as vX.Y.Z and this publishes the three artifacts plus checksums.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Test
+        run: node --test "test/*.test.js"
+
+      - name: Build npm package
+        run: npm pack --pack-destination dist
+
+      - name: Build source archives
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          git archive --format=zip -o "dist/dsh-collab-${version}-source.zip" HEAD
+          git archive --format=tar.gz --prefix="dsh-collab-${version}/" -o "dist/dsh-collab-${version}-source.tar.gz" HEAD
+
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum *.tgz *.zip *.tar.gz > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false
