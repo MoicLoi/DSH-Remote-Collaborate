@@ -43,10 +43,24 @@ jobs:
           sha256sum *.tgz *.zip *.tar.gz > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
+      - name: Prepare release body
+        run: |
+          # Curated notes win; fall back to a minimal body so a release never fails.
+          if [ -f "docs/releases/${GITHUB_REF_NAME}.md" ]; then
+            cp "docs/releases/${GITHUB_REF_NAME}.md" dist/release-body.md
+          else
+            echo "dsh-collab ${GITHUB_REF_NAME}" > dist/release-body.md
+          fi
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
-          generate_release_notes: true
+          body_path: dist/release-body.md
+          # Explicit patterns: release-body.md must not be uploaded as an asset.
+          files: |
+            dist/*.tgz
+            dist/*.zip
+            dist/*.tar.gz
+            dist/SHA256SUMS.txt
           draft: false
           prerelease: false
