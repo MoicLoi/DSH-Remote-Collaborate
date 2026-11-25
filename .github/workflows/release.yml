@@ -1,10 +1,12 @@
 name: release
 
-# Tag a commit as vX.Y.Z and this publishes the three artifacts plus checksums.
+# Tag a commit as vX.Y.Z (or run manually) and this publishes the three
+# artifacts plus checksums on a GitHub Release.
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,7 +25,11 @@ jobs:
         run: node --test "test/*.test.js"
 
       - name: Build npm package
-        run: npm pack --pack-destination dist
+        run: |
+          # npm pack refuses a destination directory that does not exist yet.
+          mkdir -p dist
+          npm pack --pack-destination dist
+          ls -l dist
 
       - name: Build source archives
         run: |
